@@ -37,6 +37,7 @@ const login_user =async (req,res)=>{
                 )
 
                 const{password, ...restdata}=user._doc;
+                res.setHeader("Access-Control-Allow-Origin", process.env.FRONTEND_URL);
                 res.cookie("token",accesstoken,{httpOnly: true,sameSite: 'none',secure:true,expires: new Date(Date.now() + 2592000000)})
                 res.json({...restdata, accesstoken})
                 
@@ -52,6 +53,7 @@ const login_user =async (req,res)=>{
 
 const logout_user = (req,res)=>{
 try {
+    res.setHeader("Access-Control-Allow-Origin", process.env.FRONTEND_URL);
     res.clearCookie("token",{httpOnly: true,sameSite: 'none',secure:true})
     res.status(200).json("Logout Success")
 } catch (error) {
